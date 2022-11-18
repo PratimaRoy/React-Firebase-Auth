@@ -6,8 +6,10 @@ import { Link, useHistory } from "react-router-dom"
 export default function UpdateProfile() {
   const emailRef = useRef()
   const passwordRef = useRef()
+  const ageRef = useRef()
+  const profilePicRef = useRef()
   const passwordConfirmRef = useRef()
-  const { currentUser, updatePassword, updateEmail } = useAuth()
+  const { currentUser, updateAge, updateProfilePic, updatePassword, updateEmail } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -24,6 +26,12 @@ export default function UpdateProfile() {
 
     if (emailRef.current.value !== currentUser.email) {
       promises.push(updateEmail(emailRef.current.value))
+    }
+    if (ageRef.current.value !== currentUser.age) {
+      promises.push(updateAge(ageRef.current.value))
+    }
+    if (profilePicRef.current.value !== currentUser.profilePicRef) {
+      promises.push(updateProfilePic(profilePicRef.current.value))
     }
     if (passwordRef.current.value) {
       promises.push(updatePassword(passwordRef.current.value))
@@ -55,6 +63,22 @@ export default function UpdateProfile() {
                 ref={emailRef}
                 required
                 defaultValue={currentUser.email}
+              />
+                </Form.Group>
+            <Form.Group id="age">
+              <Form.Label>Age</Form.Label>
+              <Form.Control
+                type="Age"
+                ref={ageRef}
+                placeholder="Leave blank to keep the same"
+              />
+              </Form.Group>
+            <Form.Group id="Profile Pic">
+              <Form.Label>Profile Pic</Form.Label>
+              <Form.Control
+                type="Profile Pic URL"
+                ref={profilePicRef}
+                placeholder="Leave blank to keep the same"
               />
             </Form.Group>
             <Form.Group id="password">
